@@ -1,0 +1,8 @@
+Squid,10
+Horse,4
+Ant,6
+Sea Lion,4
+Puppy,4
+Penguin,4
+Cat,4
+Snake,0
