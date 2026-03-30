@@ -58,6 +58,12 @@ namespace PE_MG_Buttons
 
         }
 
+        protected override void UnloadContent()
+        {
+            buttons[0].OnButtonClick -= this.RandomizeBackground;
+            base.UnloadContent();
+        }
+
         // There is no need to add anything to Game1's Update method!
         protected override void Update(GameTime gameTime)
         {
