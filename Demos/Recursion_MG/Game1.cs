@@ -9,11 +9,13 @@ namespace Recursion_MG
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
 
+        private Vector2 starLoc = Vector2.Zero;
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-            IsMouseVisible = true;
+            IsMouseVisible = false;
         }
 
         protected override void Initialize()
@@ -36,6 +38,7 @@ namespace Recursion_MG
                 Exit();
 
             // TODO: Add your update logic here
+            starLoc = Mouse.GetState().Position.ToVector2();
 
             base.Update(gameTime);
         }
@@ -52,9 +55,11 @@ namespace Recursion_MG
 
             ShapeBatch.Begin(GraphicsDevice);
 
-            DrawLines(new Vector2(10, 10), 100, Color.Magenta);
-            DrawLines(new Vector2(10, 50), 200, Color.Magenta);
-            DrawLines(new Vector2(10, 100), 50, Color.Magenta);
+            RecursiveDrawLines(new Vector2(10, 10), 100, Color.Magenta);
+            RecursiveDrawLines(new Vector2(10, 50), 200, Color.Magenta);
+            RecursiveDrawLines(new Vector2(10, 100), 50, Color.Magenta);
+
+            DrawStar(starLoc, 50, 12, Color.Green);
 
             ShapeBatch.End();
 
@@ -63,7 +68,33 @@ namespace Recursion_MG
 
         private void RecursiveDrawLines(Vector2 startPoint, float startLen, Color color)
         {
-            // Draw until length < 5
+            // Goal: Draw until length < 5
+
+            // Base case -- startLen <5
+            if(startLen < 5)
+            {
+                // do nothing. all done.
+            }
+            // Recursive case
+            else
+            {
+                // draw something
+                Vector2 nextPoint = ShapeBatch.Line(startPoint, startLen, 0, 3, Color.MediumVioletRed);
+                nextPoint.X += 10;
+                //float nextLen = startLen * 0.9f;
+
+                // Recursive call with State Change
+                RecursiveDrawLines(nextPoint, startLen * 0.9f, color);
+            }
+        }
+
+        private void DrawStar(Vector2 center, float radius, int numSpokes, Color color)
+        {
+            float angleInc = MathHelper.TwoPi / numSpokes;
+            for(float angle = 0; angle < MathHelper.TwoPi; angle += angleInc)
+            {
+                ShapeBatch.Line(center, radius, angle, 10, color);
+            }
         }
 
 
