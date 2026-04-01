@@ -88,7 +88,9 @@ namespace PE_MarioWalking
                 frame += 1;                     // Adjust the frame to the next image
 
                 if (frame > WalkFrameCount)     // Check the bounds - have we reached the end of walk cycle?
+                {
                     frame = 1;                  // Back to 1 (since 0 is the "standing" frame)
+                }
 
                 timeCounter -= timePerFrame;    // Remove the time we "used" - don't reset to 0
                                                 // This keeps the time passed 
